@@ -6,11 +6,11 @@
 </head>
 
 <body>
-    <h1>Juoksuklubi</h1>
+    <h1>Run-club</h1>
 
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}
+    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}
   </p>
   {% endif %}
 
@@ -18,6 +18,10 @@
     <a href="/login">Kirjaudu sisään</a>
     <a href="/register">Luo käyttäjätunnus</a>
     <a href="/logout">Kirjaudu ulos</a>
+  </p>
+
+  <p>
+     <a href="/new_item">Uusi ilmoitus</a>
   </p>
 </body>
 

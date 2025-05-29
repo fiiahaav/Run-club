@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Uusi ilmoitus</title>
+</head>
+
+<body>
+  <h1>Uusi ilmoitus</h1>
+  <form action="/create_item" method="post">
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" />
+    </p>
+    <p>
+    Juoksun kuvaus: <br />
+      <textarea name="description" rows="8" cols="60"></textarea>
+    </p>
+    <p>
+      Reitin pituus: <br />
+      <input type="text" name="run_length" size="5" /> km
+    </p>
+    <input type="submit" value="Luo ilmoitus" />
+  </form>
+</body>
+
+</html>
