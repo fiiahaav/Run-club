@@ -1,8 +1,7 @@
 # Run-club
 Run-club
-- Sovellukseen on mahdollista tehdä käyttäjätunnus ja kirjautua sisään
-- Sinne voi tehdä ilmoituksen reittisuunnitelmasta tulevaa juoksua varten. Ilmoitukseen ilmoitetaan reittisuunnitelma, ja mahdollinen haluttu juoksutahti
+- Sovellukseen on mahdollista tehdä käyttäjätunnus
+- Sovellukseen on mahdollista kirjautua sisään ja ulos
+- Käyttäjä voi tehdä ilmoituksen lenkistä. Ilmoitukseen ilmoitetaan reittisuunnitelma, halutessa muuta lisätietoa juoksusta, reitin pituus sekä päivämäärä (tämä toiminto ei vielä toimi)
 - Reittisuunnitelmaa voi muokata ja reittisuunnitelman voi poistaa (esimerkiksi huonon sään vuoksi)
-- Hakusanalla voi etsiä lenkin pituuden sekä juoksun nopeuden, näin vaikeusasteen voi päättää itse
-- Juoksun jälkeen lenkkiä voi kommentoida ja jättää palautetta
-- Omalla käyttäjällä näkyy kuinka moneen yhteiseen juoksuun hän on osallistunut
+- Hakusanalla voi etsiä jonkun ilmoittaman lenkin
