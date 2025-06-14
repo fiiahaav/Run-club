@@ -9,5 +9,6 @@ CREATE TABLE items (
     title TEXT,
     description TEXT,
     run_length INTEGER,
+    date TEXT,
     user_id INTEGER REFERENCES users
 );
