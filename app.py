@@ -6,6 +6,7 @@ import db
 import config
 import items
 from flask import abort
+import users
 
 
 
@@ -17,10 +18,19 @@ def require_login():
         abort(403)
 
 
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    items = users.get_items(user_id)
+    return render_template("show_user.html", user=user, items=items)
+
 @app.route("/")
 def index():
     all_items = items.get_items()
     return render_template("index.html", items=all_items)
+
 
 @app.route("/find_item")
 def find_item():
@@ -45,8 +55,13 @@ def create_item():
     require_login()
 
     title = request.form["title"]
+    if len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if len(description) > 1000:
+        abort(403)
     run_length = request.form["run_length"]
+
     user_id = session["user_id"]
 
     items.add_item(title, description, run_length, user_id)
@@ -160,3 +175,5 @@ def logout():
         del session["username"]
         del session["user_id"]
     return redirect("/")
+
+
