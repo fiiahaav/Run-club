@@ -17,8 +17,10 @@ Sovelluksen käynistysohjeet:
    ```bash
    cd Run-club
 -Luo virtuaaliympäristö ja aktivoi se:
-  (python3 -m venv venv source venv/bin/activate)
+  ```bash
+  python3 -m venv venv source venv/bin/activate)
 - Aseta ympäristömuuttuja ja käynnistä sovellus:
+   ```bash
    export FLASK_APP=app.py flask run
 -sovellus on nyt käytettävissä osoitteessa:
   http://127.0.0.1:5000
