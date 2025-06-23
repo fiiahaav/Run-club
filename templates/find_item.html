@@ -22,7 +22,7 @@
 
   <u>
     {% for item in results %}
-    <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+    <li><a href="/item/{{ item.id }}">{{ item.title }}</a> - {{ item.date }}</li>
     {% endfor %}
   </ul>
   {% endif %}

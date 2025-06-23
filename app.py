@@ -60,10 +60,11 @@ def create_item():
     if len(description) > 1000:
         abort(403)
     run_length = request.form["run_length"]
+    date = request.form["date"]
 
     user_id = session["user_id"]
 
-    items.add_item(title, description, run_length, user_id)
+    items.add_item(title, description, run_length, user_id, date)
 
 
 

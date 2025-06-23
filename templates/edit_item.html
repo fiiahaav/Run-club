@@ -20,6 +20,10 @@
       Reitin pituus: <br />
       <input type="text" name="run_length" size="5" value="{{ item.run_length }}" /> km
     </p>
+    <p>
+      Päivämäärä: <br />
+      <input type="date" name="date" value="{{ item.date }}">
+    </p>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
     <input type="submit" value="Päivitä ilmoitusta" />
   </form>

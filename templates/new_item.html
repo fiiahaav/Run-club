@@ -10,7 +10,7 @@
   <form action="/create_item" method="post">
     <p>
       Otsikko: <br />
-      <input type="text" name="title" maxlength="50"/>
+      <input type="text" name="title" maxlength="50" required/>
     </p>
     <p>
     Juoksun kuvaus: <br />
@@ -18,9 +18,11 @@
     </p>
     <p>
       Reitin pituus: <br />
-      <input type="text" name="run_length" size="5" /> km
+      <input type="text" name="run_length" size="5" required /> km
     </p>
     <p>
+    Juoksun päivämäärä: <br />
+      <input type="date" name="date" size="5" required /> km
     <input type="submit" value="Luo ilmoitus" />
   </form>
 </body>
