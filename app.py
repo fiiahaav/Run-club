@@ -47,7 +47,8 @@ def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
-    return render_template("show_item.html", item=item)
+    classes = items.get_classes(item_id)
+    return render_template("show_item.html", item=item, classes=classes)
 
 
 @app.route("/create_item", methods=["POST"])
@@ -58,7 +59,7 @@ def create_item():
     if not title or len(title) > 50:
         abort(403)
     description = request.form["description"]
-    if not description or (description) > 1000:
+    if not description or len(description) > 1000:
         abort(403)
     run_length = request.form["run_length"]
     if not re.search("^[1-9][0-9]{0,3}$", run_length):
@@ -71,11 +72,11 @@ def create_item():
     section = request.form["section"]
     if section:
         classes.append(("juoksutyyppi", section))
-    level = request.form["level"]
-    if level:
-        classes.append(("Juoksijan taso", level))
+    runner_level = request.form["runner_level"]
+    if runner_level:
+        classes.append(("Juoksijan taso", runner_level))
 
-    items.add_item(title, description, run_length, user_id, date, classes)
+    items.add_item(title, description, run_length, user_id,date, classes)
 
     return redirect("/")
 
