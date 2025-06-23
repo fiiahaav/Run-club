@@ -6,6 +6,7 @@ import config
 import items
 from flask import abort
 import users
+import re
 
 
 
@@ -54,19 +55,27 @@ def create_item():
     require_login()
 
     title = request.form["title"]
-    if len(title) > 50:
+    if not title or len(title) > 50:
         abort(403)
     description = request.form["description"]
-    if len(description) > 1000:
+    if not description or (description) > 1000:
         abort(403)
     run_length = request.form["run_length"]
+    if not re.search("^[1-9][0-9]{0,3}$", run_length):
+        abort(403)
     date = request.form["date"]
 
     user_id = session["user_id"]
 
-    items.add_item(title, description, run_length, user_id, date)
+    classes = []
+    section = request.form["section"]
+    if section:
+        classes.append(("juoksutyyppi", section))
+    level = request.form["level"]
+    if level:
+        classes.append(("Juoksijan taso", level))
 
-
+    items.add_item(title, description, run_length, user_id, date, classes)
 
     return redirect("/")
 
