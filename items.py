@@ -6,22 +6,24 @@ def get_all_classes():
 
     classes = {}
     for title, value in result:
-        classes[title] = []
+        if title not in classes:
+            classes[title] = []
     for title, value in result:
         classes[title].append(value)
 
     return classes
 
 def add_item(title, description, run_length, user_id, date, classes):
+    all_classes = get_all_classes()
     sql = """INSERT INTO items (title, description, run_length, user_id, date) VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [title, description, run_length, user_id, date])
+
 
     item_id = db.last_insert_id()
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
-
 
 
 def get_classes(item_id):

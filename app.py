@@ -69,13 +69,17 @@ def create_item():
 
     user_id = session["user_id"]
 
+    all_classes = items.get_all_classes()
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
-
-    items.add_item(title, description, run_length, user_id,date, classes)
+            class_title, class_value = entry.split(":")
+            if class_title[0] not in all_classes:
+                abort(403)
+            if class_value[1] not in all_classes[class_title[0]]:
+                abort(403)
+            classes.append((class_title, class_value))
+    items.add_item(title, description, run_length, user_id, date, classes)
 
     return redirect("/")
 
@@ -125,11 +129,18 @@ def update_item():
     run_length = request.form["run_length"]
     date = request.form["date"]
 
+    all_classes = items.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            class_title, class_value = entry.split(":")
+            if class_title[0] not in all_classes:
+                abort(403)
+            if class_value[1] not in all_classes[class_title[0]]:
+                abort(403)
+            classes.append((class_title, class_value))
+
 
 
     items.update_item(item_id, title, description, run_length, date, classes)
