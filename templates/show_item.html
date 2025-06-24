@@ -30,7 +30,7 @@
     Luokat:
     <ul>
       {% for class in classes %}
-      <li>{{ class.title }}: {{ class.value }}</li>
+      <li>{{ labels[class.title] }}: {{ class.value }}</li>
       {% endfor %}
     </ul>
   </p>
