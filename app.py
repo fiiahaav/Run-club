@@ -7,6 +7,7 @@ import items
 from flask import abort
 import users
 import re
+from labels import labels
 
 
 
@@ -48,7 +49,7 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    return render_template("show_item.html", item=item, classes=classes)
+    return render_template("show_item.html", item=item, classes=classes, labels=labels)
 
 
 @app.route("/create_item", methods=["POST"])
@@ -69,12 +70,10 @@ def create_item():
     user_id = session["user_id"]
 
     classes = []
-    section = request.form["section"]
-    if section:
-        classes.append(("juoksutyyppi", section))
-    runner_level = request.form["runner_level"]
-    if runner_level:
-        classes.append(("Juoksijan taso", runner_level))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
 
     items.add_item(title, description, run_length, user_id,date, classes)
 
@@ -84,7 +83,9 @@ def create_item():
 @app.route("/new_item")
 def new_item():
     require_login()
-    return render_template("new_item.html")
+    classes = items.get_all_classes()
+    return render_template("new_item.html", classes=classes, labels=labels)
+
 
 
 @app.route("/edit_item/<int:item_id>")
