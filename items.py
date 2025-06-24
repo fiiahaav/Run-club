@@ -26,6 +26,19 @@ def add_item(title, description, run_length, user_id, date, classes):
         db.execute(sql, [item_id, title, value])
 
 
+def add_sign_up(item_id, user_id, comment):
+    sql = """INSERT INTO sign_ups (item_id, user_id, comment) VALUES (?, ?, ?)"""
+    db.execute(sql, [item_id, user_id, comment])
+
+def get_sign_ups(item_id):
+    sql = """SELECT sign_ups.comment, users.username, users.id user_id
+            FROM sign_ups, users
+            WHERE sign_ups.item_id = ? AND sign_ups.user_id = users.id
+            ORDER BY sign_ups.id DESC"""
+    return db.query(sql, [item_id])
+
+
+
 def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])

@@ -13,6 +13,13 @@ CREATE TABLE items (
     user_id INTEGER REFERENCES users
 );
 
+CREATE TABLE sign_ups (
+    id PRIMARY KEY,
+    item_id  INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    comment TEXT
+);
+
 CREATE TABLE classes (
     id INTEGER PRIMARY KEY,
     title TEXT,
