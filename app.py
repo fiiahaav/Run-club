@@ -8,6 +8,7 @@ from flask import abort
 import users
 import re
 from labels import labels
+from datetime import datetime, date
 
 
 
@@ -50,7 +51,19 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     sign_ups = items.get_sign_ups(item_id)
-    return render_template("show_item.html", item=item, classes=classes, labels=labels, sign_ups=sign_ups)
+    images = items.get_images(item_id)
+    return render_template("show_item.html", item=item, classes=classes, labels=labels, sign_ups=sign_ups, images=images)
+
+@app.route("/image/<int:image_id>")
+def show_image(image_id):
+    image = items.get_image(image_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/png")
+    return response
+
 
 
 @app.route("/create_item", methods=["POST"])
@@ -66,7 +79,14 @@ def create_item():
     run_length = request.form["run_length"]
     if not re.search("^[1-9][0-9]{0,3}$", run_length):
         abort(403)
-    date = request.form["date"]
+    date_str = request.form["date"]
+    try:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        abort(403)
+
+    if date_obj < date.today():
+        return "VIRHE: date in the past"
 
     user_id = session["user_id"]
 
@@ -75,15 +95,51 @@ def create_item():
     for entry in request.form.getlist("classes"):
         if entry:
             class_title, class_value = entry.split(":")
-            if class_title[0] not in all_classes:
+            if class_title not in all_classes:
                 abort(403)
-            if class_value[1] not in all_classes[class_title[0]]:
+            if class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title, class_value))
-    items.add_item(title, description, run_length, user_id, date, classes)
+    items.add_item(title, description, run_length, user_id, date_obj, classes)
 
     return redirect("/")
 
+
+@app.route("/images/<int:item_id>")
+def edit_images(item_id):
+    require_login()
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"]!=session["user_id"]:
+        abort(403)
+
+    images = items.get_images(item_id)
+    return render_template("images.html", item=item, images=images)
+
+
+@app.route("/add_image", methods=["POST"])
+def add_image():
+    require_login()
+
+    item_id = request.form["item_id"]
+    print("item_id:", item_id)
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"]!=session["user_id"]:
+        abort(403)
+
+    file = request.files["image"]
+    if not file.filename.endswith(".png"):
+        return "VIRHE: väärä tiedostomuoto"
+
+    image = file.read()
+    if len(image) > 100 * 1024:
+        return "VIRHE: liian suuri kuva"
+
+    items.add_image(item_id, image)
+    return redirect("/images/" + str(item_id))
 
 @app.route("/create_sign_up", methods=["POST"])
 def create_sign_up():

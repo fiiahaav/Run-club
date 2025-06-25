@@ -20,6 +20,14 @@ CREATE TABLE sign_ups (
     comment TEXT
 );
 
+
+CREATE TABLE images (
+    id INTEGER PRIMARY KEY,
+    item_id REFERENCES items,
+    image BLOB
+);
+
+
 CREATE TABLE classes (
     id INTEGER PRIMARY KEY,
     title TEXT,
