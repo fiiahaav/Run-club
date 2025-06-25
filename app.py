@@ -284,5 +284,3 @@ def logout():
         del session["username"]
         del session["user_id"]
     return redirect("/")
-
-

@@ -1,4 +1,5 @@
 import db
+from datetime import datetime
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -56,7 +57,17 @@ def get_classes(item_id):
     return db.query(sql, [item_id])
 
 def get_items():
-    sql = "SELECT id, title, date FROM items ORDER BY id DESC"
+    sql = """SELECT items.id,
+                    items.title,
+                    strftime('%d.%m.%Y', items.date) AS formatted_date,
+                    users.id AS user_id,
+                    users.username,
+                    COUNT(sign_ups.comment) AS sign_up_count
+             FROM items
+             JOIN users ON items.user_id = users.id
+             LEFT JOIN sign_ups ON items.id = sign_ups.item_id
+             GROUP BY items.id
+             ORDER BY items.id DESC"""
     return db.query(sql)
 
 def get_item(item_id):
