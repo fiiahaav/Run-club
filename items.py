@@ -67,7 +67,7 @@ def get_items():
              JOIN users ON items.user_id = users.id
              LEFT JOIN sign_ups ON items.id = sign_ups.item_id
              GROUP BY items.id
-             ORDER BY items.id DESC"""
+             ORDER BY items.date ASC"""
     return db.query(sql)
 
 def get_item(item_id):
