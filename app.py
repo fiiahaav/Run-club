@@ -252,6 +252,9 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+
+    if not password1 or not password2:
+        return "VIRHE: salasana puuttuu"
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
 
@@ -269,6 +272,9 @@ def login():
     if request.method =="POST":
         username = request.form["username"]
         password = request.form["password"]
+
+        if not username or not password:
+            return "VIRHE: käyttäjätunnus ja salasana ovat pakollisia"
 
         user_id = users.check_login(username, password)
         if user_id:
