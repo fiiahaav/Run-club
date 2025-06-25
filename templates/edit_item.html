@@ -38,7 +38,8 @@
       </select>
     </p>
     {% endfor %}
-  <input type="submit" value="Päivitä ilmoitusta" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" value="Päivitä ilmoitusta" />
 </form>
 <p>
   <a href="/item/{{ item.id }}">Takaisin ilmoitukseen</a>
