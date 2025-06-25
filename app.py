@@ -8,6 +8,7 @@ import items
 from flask import abort
 import users
 import re
+import markupsafe
 from labels import labels
 from datetime import datetime, date
 
@@ -25,6 +26,12 @@ def check_csrf():
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 
 @app.route("/user/<int:user_id>")
