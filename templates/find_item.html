@@ -1,25 +1,26 @@
 {% extends "layout.html" %}
 
-{% block title %}Etsi ilmoitua{% endblock %}
+{% block title %}Etsi ilmoitusta{% endblock %}
 
 {% block content %}
-  <h2>Etsi ilmoitus</h2>
+<h2>Etsi ilmoitus</h2>
 
 <form action="/find_item" method="get">
   <p>
-    Hakusana: <input type="text" name="query" value="{{ query }}">
+    Hakusana tai päivämäärä (YYYY-MM-DD):
+    <input type="text" name="query" value="{{ query }}">
   </p>
   <input type="submit" value="Lähetä">
 </form>
 
-
-  {% if query %}
-<h3>Tulokset</h3>
-
-<u>
-  {% for item in results %}
-  <li><a href="/item/{{ item.id }}">{{ item.title }}</a> - {{ item.date }}</li>
-  {% endfor %}
-</ul>
+{% if results %}
+  <h3>Tulokset</h3>
+  <ul>
+    {% for item in results %}
+      <li><a href="/item/{{ item.id }}">{{ item.title }}</a> – {{ item.date }}</li>
+    {% endfor %}
+  </ul>
+{% elif query %}
+  <p>Ei tuloksia.</p>
 {% endif %}
 {% endblock %}

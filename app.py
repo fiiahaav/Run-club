@@ -36,7 +36,7 @@ def index():
 
 @app.route("/find_item")
 def find_item():
-    query = request.args.get("query")
+    query = request.args.get("query", "")
     if query:
         results=items.find_items(query)
     else:

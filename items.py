@@ -108,8 +108,12 @@ def remove_item(item_id):
 
 def find_items(query):
     sql = """SELECT id, title, date
-            FROM items
-            WHERE title LIKE ? OR description LIKE ?
-            ORDER BY id DESC"""
+             FROM items
+             WHERE title LIKE ?
+                OR description LIKE ?
+                OR date LIKE ?
+             ORDER BY date DESC"""
+
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, query])
+
