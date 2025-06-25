@@ -210,9 +210,9 @@ def update_item():
     for entry in request.form.getlist("classes"):
         if entry:
             class_title, class_value = entry.split(":")
-            if class_title[0] not in all_classes:
+            if class_title not in all_classes:
                 abort(403)
-            if class_value[1] not in all_classes[class_title[0]]:
+            if class_value not in all_classes[class_title]:
                 abort(403)
             classes.append((class_title, class_value))
 
@@ -275,6 +275,8 @@ def login():
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
+            return redirect("/")
+
 
 @app.route("/logout")
 def logout():
