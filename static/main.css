@@ -2,14 +2,16 @@ body {
   margin: auto;
   max-width: 50em;
   font-family: sans-serif;
-  background-color: lightblue;
+  background-color: lightgreen;
 }
 
 
 .item {
-  border: 2px solid black;
+  background-color: #f7f7f7;   /
+  border: 2px solid #ccc;
   margin: 1em;
-  padding: 0.2em 0.5em;
+  padding: 0.5em 1em;
+  border-radius: 8px;
 }
 
 .info {
