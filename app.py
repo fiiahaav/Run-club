@@ -102,7 +102,9 @@ def create_item():
             classes.append((class_title, class_value))
     items.add_item(title, description, run_length, user_id, date_obj, classes)
 
-    return redirect("/")
+    item_id = db.last_insert_id()
+
+    return redirect("/item/" + str(item_id))
 
 
 @app.route("/images/<int:item_id>")
