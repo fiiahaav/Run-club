@@ -3,12 +3,15 @@
 {% block title %}Ilmoituksen poisto{% endblock %}
 
 {% block content %}
-<h1>Ilmoituksen poisto</h1>
-<p>Ilmoitus: {{ item.title }}</p>
+<h2>Lenkki-ilmoitus: {{ item.title }}</h2>
+<h3>Ilmoituksen poisto</h3>
 <p>Haluatko varmasti poistaa tämän ilmoituksen?</p>
 <form action="/remove_item/{{ item.id }}" method="post">
 <form action="/remove_item" method="post">
   <input type="submit" name="remove" value="Poista ilmoitus">
   <input type="submit" name="back" value="Palaa takaisin">
 </form>
+<p>
+  <a href="/item/{{ item.id }}">Takaisin ilmoitukseen</a>
+</p>
 {% endblock %}

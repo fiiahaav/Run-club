@@ -3,7 +3,8 @@
 {% block title %}Ilmoituksen kuvat{% endblock %}
 
 {% block content %}
-<h2>Ilmoituksen kuvat</h2>
+<h2>Lenkki-ilmoitus: {{ item.title }}</h2>
+<h3>Ilmoituksen kuvat: </h3>
 
 <p>
 Ilmoituksessa on {{ images | count }} kuvaa.
@@ -15,6 +16,8 @@ Ilmoituksessa on {{ images | count }} kuvaa.
 </p>
 <input type="hidden" name="item_id" value="{{ item.id }}">
 <input type="submit" value="Lähetä" />
+<p>
 </form>
-<a href="/item/{{ item.id }}">Takaisin</a>
+  <a href="/item/{{ item.id }}">Takaisin ilmoitukseen</a>
+</p>
 {% endblock %}

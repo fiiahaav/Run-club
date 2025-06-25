@@ -6,9 +6,9 @@
 <h2>{{ item.title }}</h2>
 {% if session.user_id == item.user_id %}
 <p>
-  <a href="/edit_item/{{ item.id }}">Muokkaa<a/>
-  <a href="/remove_item/{{ item.id }}">Poista ilmoitus<a/>
-  <a href="/images/{{ item.id }}">Kuvat<a/>
+  <a href="/edit_item/{{ item.id }}">Muokkaa<a/> |
+  <a href="/remove_item/{{ item.id }}">Poista ilmoitus<a/> |
+  <a href="/images/{{ item.id }}">Kuvat<a/> |
 </p>
 {% endif %}
 {% for image in images %}
@@ -41,6 +41,7 @@
   <li>{{ sign_up.comment }} <a href="{{ sign_up.user_id }}" >{{ sign_up.username }}</a></li>
   {% endfor %}
 </ul>
+{% if session.user_id %}
 <h3>Ilmoittaudu</h3>
 <form action="/create_sign_up" method="post">
   Kommentti:
@@ -48,4 +49,5 @@
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="submit" value="Ilmoittaudu" />
 </form>
+{% endif %}
 {% endblock %}
