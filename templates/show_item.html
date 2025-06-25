@@ -27,11 +27,11 @@
   Juoksun päivämäärä: {{ item.date }}
 </p>
 <p>
-  {% if classes %}
+{% if classes %}
   Luokat:
   <ul>
     {% for class in classes %}
-    <li>{{ labels[class.title] }}: {{ class.value }}</li>
+    <li>{{ labels[class[0]] }}: {{ class[1] }}</li>
     {% endfor %}
   </ul>
 {% endif %}
