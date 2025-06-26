@@ -1,15 +1,37 @@
 # Run-club
-Run-club
-- Sovellukseen on mahdollista tehdä käyttäjätunnus
+
+
+## Sovelluksen tominnot
+
+- Sovellukseen on mahdollista luoda käyttäjätunnus
+- Käyttäjän on mahdollista kirjautua sisään ja sovelluksesta ulos
+- Käyttäjä voi tehdä ilmoituksen lenkistä. Ilmoitukseen ilmoitetaan reittisuunnitelma, halutessaan muuta lisätietoa juoksusta, reitin pituus sekä päivämäärä
 - Käyttäjäsivuilla näkyy montako ilmoitusta käyttäjän nimissä on ja mitä ilmoituksia ne ovat
-- Käyttäjä pystyy kirjautua sisään ja sovelluksesta ulos
-- Käyttäjä voi tehdä ilmoituksen lenkistä. Ilmoitukseen ilmoitetaan reittisuunnitelma, halutessaan muuta lisätietoa juoksusta, reitin pituus sekä päivämäärä (tämä toiminto ei vielä toimi)
 - Käyttäjällä on mahdollisuus muokata tai poistaa itse luomansa ilmoitus
 - Hakusanalla voi etsiä ilmoituksia lenkeistä
+- Käyttäjä voi ilmoittautua toisen käyttäjän ilmoittamalle lenkille lähettämällä kommentin
 
-Sovelluksen käynnistysohjeet:
-- työkalut: pip, python
-  
+## Sovelluksen käynnistysohjeet:
+
+Asenna `flask`kirjasto:
+
+```
+$ pip install flask
+```
+
+
+Luo tietokannan taulut, lisää alkutiedot:
+```
+$ sqlite3 database < schema.sql
+$ sqlite3 database < init.sql
+```
+Käynnistä sovellus näin:
+
+```
+
+$ flask run
+```
+
 
 - Siirry kansioon, jossa `app.py` sijaitsee:
 
