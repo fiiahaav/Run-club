@@ -15,7 +15,7 @@
 <img src="/image{{ image.id }}" />
 {% endfor %}
 <p>
-  {{ item.description | show_lines }}
+  {{ item.description  }}
 </p>
 <p>
   Juoksumatka: {{ item.run_length }} km
@@ -44,8 +44,8 @@
 {% if session.user_id %}
 <h3>Ilmoittaudu</h3>
 <form action="/create_sign_up" method="post">
-  Kommentti:
-  <input type="text" name="comment" />
+  <label for="comment">Kommentti:</label> <br />
+  <input type="text" name="comment" id="comment" />
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Ilmoittaudu" />
