@@ -23,7 +23,7 @@ CREATE TABLE sign_ups (
 
 CREATE TABLE images (
     id INTEGER PRIMARY KEY,
-    item_id REFERENCES items,
+    item_id INTEGER REFERENCES items,
     image BLOB
 );
 

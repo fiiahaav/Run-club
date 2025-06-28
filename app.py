@@ -1,16 +1,19 @@
+import re
 import secrets
 import sqlite3
+from datetime import datetime, date
+
+
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import redirect, abort, make_response, render_template, request, session
+import markupsafe
+
 import db
 import config
 import items
-from flask import abort
 import users
-import re
-import markupsafe
 from labels import labels
-from datetime import datetime, date
+
 
 
 
@@ -66,7 +69,8 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     sign_ups = items.get_sign_ups(item_id)
     images = items.get_images(item_id)
-    return render_template("show_item.html", item=item, classes=classes, labels=labels, sign_ups=sign_ups, images=images)
+    return render_template("show_item.html", item=item, classes=classes,
+                           labels=labels, sign_ups=sign_ups, images=images)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -74,7 +78,7 @@ def show_image(image_id):
     if not image:
         abort(404)
 
-    response = make_response(bytes(image))
+    response = make_response(image)
     response.headers.set("Content-Type", "image/png")
     return response
 
@@ -122,25 +126,11 @@ def create_item():
     return redirect("/item/" + str(item_id))
 
 
-@app.route("/images/<int:item_id>")
-def edit_images(item_id):
-    require_login()
-    item = items.get_item(item_id)
-    if not item:
-        abort(404)
-    if item["user_id"]!=session["user_id"]:
-        abort(403)
-
-    images = items.get_images(item_id)
-    return render_template("images.html", item=item, images=images)
-
-
 @app.route("/add_image", methods=["POST"])
 def add_image():
     require_login()
 
     item_id = request.form["item_id"]
-    print("item_id:", item_id)
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -157,6 +147,19 @@ def add_image():
 
     items.add_image(item_id, image)
     return redirect("/images/" + str(item_id))
+
+
+@app.route("/images/<int:item_id>")
+def edit_images(item_id):
+    require_login()
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"]!=session["user_id"]:
+        abort(403)
+
+    images = items.get_images(item_id)
+    return render_template("images.html", item=item, images=images)
 
 @app.route("/create_sign_up", methods=["POST"])
 def create_sign_up():
@@ -201,7 +204,8 @@ def edit_item(item_id):
     for entry in items.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item=item, classes=classes, all_classes=all_classes, labels=labels)
+    return render_template("edit_item.html", item=item, classes=classes,
+                           all_classes=all_classes, labels=labels)
 
 @app.route("/update_item", methods=["POST"])
 def update_item():

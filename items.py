@@ -48,7 +48,7 @@ def add_image(item_id, image):
 
 def get_image(image_id):
     sql = "SELECT image FROM images WHERE id = ?"
-    result = db.execute(sql, [image_id])
+    result = db.query(sql, [image_id])
     return result[0][0] if result else None
 
 
