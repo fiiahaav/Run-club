@@ -1,5 +1,4 @@
 import db
-from datetime import datetime
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -16,8 +15,13 @@ def get_all_classes():
 
 def add_item(title, description, run_length, user_id, date, classes):
     all_classes = get_all_classes()
-    sql = """INSERT INTO items (title, description, run_length, user_id, date) VALUES (?, ?, ?, ?, ?)"""
+    sql = """INSERT INTO items (title, description, run_length, user_id, date)
+                                VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [title, description, run_length, user_id, date])
+
+    for class_id in classes:
+        db.execute("INSERT INTO item_classes (item_id, class_id) VALUES (?, ?)",
+                   [item_id, class_id])
 
 
     item_id = db.last_insert_id()
@@ -118,4 +122,3 @@ def find_items(query):
 
     like = "%" + query + "%"
     return db.query(sql, [like, like, query])
-

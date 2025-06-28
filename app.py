@@ -281,8 +281,8 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+
+        return redirect("/item/" + str(item_id))
 
 @app.route("/register")
 def register():
@@ -325,9 +325,9 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            return "VIRHE: väärä tunnus tai salasana"
-            return redirect("/")
+
+        return "VIRHE: väärä tunnus tai salasana"
+
 
 
 @app.route("/logout")
