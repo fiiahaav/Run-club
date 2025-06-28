@@ -161,6 +161,23 @@ def edit_images(item_id):
     images = items.get_images(item_id)
     return render_template("images.html", item=item, images=images)
 
+@app.route("/remove_images", methods=["POST"])
+def remove_images():
+    require_login()
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"]!=session["user_id"]:
+        abort(403)
+
+    for image_id in request.form.getlist("image_id"):
+        items.remove_image(item_id, image_id)
+
+    return redirect("/images/" + str(item_id))
+
+
 @app.route("/create_sign_up", methods=["POST"])
 def create_sign_up():
     require_login()
