@@ -19,16 +19,12 @@ def add_item(title, description, run_length, user_id, date, classes):
                                 VALUES (?, ?, ?, ?, ?)"""
     db.execute(sql, [title, description, run_length, user_id, date])
 
-    for class_id in classes:
-        db.execute("INSERT INTO item_classes (item_id, class_id) VALUES (?, ?)",
-                   [item_id, class_id])
-
-
     item_id = db.last_insert_id()
 
-    sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
+    link_sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
     for class_title, class_value in classes:
-        db.execute(sql, [item_id, class_title, class_value])
+        db.execute(link_sql, [item_id, class_title, class_value])
+    return item_id
 
 
 def add_sign_up(item_id, user_id, comment):
@@ -107,10 +103,10 @@ def update_item(item_id, title, description, run_length, date, classes):
         db.execute(sql, [item_id, class_title, class_value])
 
 def remove_item(item_id):
-    sql = "DELETE FROM item_classes WHERE item_id = ?"
-    db.execute(sql, [item_id])
-    sql = "DELETE FROM items WHERE id = ?"
-    db.execute(sql, [item_id])
+    db.execute("DELETE FROM sign_ups WHERE item_id = ?", [item_id])
+    db.execute("DELETE FROM item_classes WHERE item_id=?", [item_id])
+    db.execute("DELETE FROM images WHERE item_id = ?", [item_id])
+    db.execute("DELETE FROM items WHERE id = ?", [item_id])
 
 def find_items(query):
     sql = """SELECT id, title, date

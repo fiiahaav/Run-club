@@ -290,7 +290,6 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
-    check_csrf()
 
     username = request.form["username"]
     password1 = request.form["password1"]
