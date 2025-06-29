@@ -54,12 +54,12 @@ def index():
 @app.route("/find_item")
 def find_item():
     query = request.args.get("query", "")
-    if query:
-        results=items.find_items(query)
-    else:
-        query = ""
-        results=[]
-    return render_template("find_item.html", query=query, results=results)
+    date = request.args.get("date", "")
+
+    results =  results = items.find_items(query, date)
+
+
+    return render_template("find_item.html", query=query, results=results, date=date)
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):

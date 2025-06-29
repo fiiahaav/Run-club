@@ -108,13 +108,15 @@ def remove_item(item_id):
     db.execute("DELETE FROM images WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM items WHERE id = ?", [item_id])
 
-def find_items(query):
+def find_items(query, date):
+    query = f"%{query}%" if query else "%"
+    date = f"%{date}%" if date else "%"
+
     sql = """SELECT id, title, date
              FROM items
-             WHERE title LIKE ?
-                OR description LIKE ?
-                OR date LIKE ?
+             WHERE (title LIKE ?
+                OR description LIKE ?)
+                AND date LIKE ?
              ORDER BY date DESC"""
 
-    like = "%" + query + "%"
-    return db.query(sql, [like, like, query])
+    return db.query(sql, [query, query, date])

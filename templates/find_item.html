@@ -7,8 +7,12 @@
 
 <form action="/find_item" method="get">
   <p>
-    Hakusana tai päivämäärä (YYYY-MM-DD):
+    Hakusana:
     <input type="text" name="query" value="{{ query }}">
+  </p>
+  <p>
+    Juoksun päivämäärä:
+    <input type="date" name="date" id="date" value="{{ date }}">
   </p>
   <input type="submit" value="Lähetä">
 </form>
